@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Redirect } from "react-router-dom";
 import firebaseConfig from "../config";
+import Header from "./Header";
 
 const SignUp = () => {
   const [currentUser, setCurrentUser] = useState(null);
@@ -25,6 +26,7 @@ const SignUp = () => {
 
   return (
     <>
+      <Header />
       <div className="container mt-5">
         <h1>Sign Up</h1>
         <form onSubmit={handleSubmit}>

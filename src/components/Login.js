@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { Redirect } from "react-router-dom";
 import { AuthContext } from "./Auth";
 import firebaseConfig from "../config";
+import Header from "./Header";
 
 const LogIn = () => {
   const handleSubmit = (e) => {
@@ -24,6 +25,7 @@ const LogIn = () => {
 
   return (
     <>
+      <Header />
       <div className="container mt-5">
         <h1>Log in</h1>
         <form onSubmit={handleSubmit}>

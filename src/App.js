@@ -6,6 +6,7 @@ import LogIn from "./components/Login";
 import SignUp from "./components/SignUp";
 import { AuthProvider } from "./components/Auth";
 import Header from "./components/Header";
+// import Banner from "./components/Header";
 
 function App() {
   return (

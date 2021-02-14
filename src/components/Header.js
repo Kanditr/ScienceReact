@@ -12,7 +12,7 @@ function Header() {
       <div className="container">
         <div className="header-con">
           <div className="logo-container">
-            <a href="#">Science3</a>
+            <a href="/">Science3</a>
           </div>
           <ul className={click ? "menu active" : "menu"}>
             <li className="menu-link" onClick={closeMobileMenu}>
