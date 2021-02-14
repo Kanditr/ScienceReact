@@ -2,14 +2,16 @@ import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "./Auth";
 import Header from "./Header";
+import Banner from "./Banner";
 
 const Home = () => {
   const { currentUSer } = useContext(AuthContext);
+
   return (
     <>
       <Header />
+      <Banner />
       <div className="container mt-5">
-        <h1>Home</h1>
         {currentUSer ? (
           <p>
             You are logged in - <Link to="/dashboard">View Dashboard</Link>
