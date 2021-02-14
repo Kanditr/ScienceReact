@@ -3,9 +3,8 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Home from "./components/Home";
 import Dashboard from "./components/Dashboard";
 import LogIn from "./components/Login";
-import SignUp from "./components/SignUp";
+import SignUp from "./components/Signup";
 import { AuthProvider } from "./components/Auth";
-// import Banner from "./components/Header";
 
 function App() {
   return (
