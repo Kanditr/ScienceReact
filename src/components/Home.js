@@ -10,7 +10,7 @@ const Home = () => {
   return (
     <>
       <Header />
-      {/* <Banner /> */}
+      <Banner />
       <div className="container mt-5">
         {currentUSer ? (
           <p>
