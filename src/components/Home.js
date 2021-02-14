@@ -7,7 +7,6 @@ const Home = () => {
   const { currentUSer } = useContext(AuthContext);
   return (
     <>
-      {/* log in */}
       <Header />
       <div className="container mt-5">
         <h1>Home</h1>
