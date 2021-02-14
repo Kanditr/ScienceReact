@@ -4,8 +4,7 @@
 }
 .banner-bg {
   height: 500px;
-  background: url("https://images.unsplash.com/photo-1579684288538-c76a2fab9617?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=2503&q=80")
-    no-repeat;
+  background: url("./img/bg01.jpeg") no-repeat;
   background-size: cover;
   overflow: hidden;
   opacity: 100%;
