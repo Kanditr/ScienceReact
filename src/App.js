@@ -5,6 +5,7 @@ import Dashboard from "./components/Dashboard";
 import LogIn from "./components/Login";
 import SignUp from "./components/SignUp";
 import { AuthProvider } from "./components/Auth";
+import Header from "./components/Header";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route exact path="/Dashboard" component={Dashboard} />
           <Route exact path="/login" component={LogIn} />
           <Route exact path="/signup" component={SignUp} />
+          <Route exact path="/Header" component={Header} />
         </Switch>
       </Router>
     </AuthProvider>
