@@ -3,7 +3,8 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Home from "./components/Home";
 import Dashboard from "./components/Dashboard";
 import LogIn from "./components/Login";
-import SignUp from "./components/Signup";
+import Signup from "./components/Signup";
+import Createproject from "./components/createproject";
 import { AuthProvider } from "./components/Auth";
 
 function App() {
@@ -14,7 +15,8 @@ function App() {
           <Route exact path="/" component={Home} />
           <Route exact path="/Dashboard" component={Dashboard} />
           <Route exact path="/login" component={LogIn} />
-          <Route exact path="/signup" component={SignUp} />
+          <Route exact path="/signup" component={Signup} />
+          <Route exact path="/createproject" component={Createproject} />
         </Switch>
       </Router>
     </AuthProvider>

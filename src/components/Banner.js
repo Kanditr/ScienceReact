@@ -1,5 +1,6 @@
 import React from "react";
 import "./Banner.css";
+import { Link } from "react-router-dom";
 
 let bannerData = {
   title: "Science3 landing page",
@@ -15,9 +16,9 @@ function Banner() {
           <div className="banner-text">
             <h1>{bannerData.title}</h1>
             <p>{bannerData.desc}</p>
-            <a href="#" className="banner-btn">
-              Learn more
-            </a>
+            <Link to="/createproject" className="banner-btn">
+              Create a project
+            </Link>
           </div>
         </div>
       </div>
