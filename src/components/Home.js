@@ -3,7 +3,6 @@ import { AuthContext } from "./Auth";
 import Header from "./Header";
 import Banner from "./Banner";
 import { Redirect } from "react-router-dom";
-import Project from "./Project";
 
 const Home = () => {
   const { currentUSer } = useContext(AuthContext);
@@ -17,7 +16,6 @@ const Home = () => {
       <div>
         <Header />
         <Banner />
-        <Project />
       </div>
     </>
   );
