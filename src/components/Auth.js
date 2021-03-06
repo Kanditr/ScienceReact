@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import firebaseConfig from "../config";
+import FirebaseConfig from "../config";
 
 export const AuthContext = React.createContext();
 
@@ -8,7 +8,7 @@ export const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
 
   useEffect(() => {
-    firebaseConfig.auth().onAuthStateChanged((user) => {
+    FirebaseConfig.auth().onAuthStateChanged((user) => {
       setCurrentUser(user);
       setLoading(false);
     });
