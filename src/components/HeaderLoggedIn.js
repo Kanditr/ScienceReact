@@ -26,11 +26,11 @@ function HeaderNotLogIn() {
             <li className="menu-link" onClick={closeMobileMenu}>
               <a href="#">{currentUser.email}</a>
             </li>
-            <li>
+            {/* <li>
               <Link to="signup" className="menu-link" onClick={closeMobileMenu}>
                 Sign out
               </Link>
-            </li>
+            </li> */}
           </ul>
           <div className="mobile-menu" onClick={handleClick}>
             {click ? <FiX /> : <FiMenu />}
