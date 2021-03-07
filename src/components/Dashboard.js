@@ -6,9 +6,9 @@ import firebaseConfig from "../config";
 const DashBoard = () => {
   const { currentUser } = useContext(AuthContext);
 
-  if (!currentUser) {
-    return <Redirect to="/login" />;
-  }
+  // if (!currentUser) {
+  //   return <Redirect to="/login" />;
+  // }
 
   return (
     <div>
