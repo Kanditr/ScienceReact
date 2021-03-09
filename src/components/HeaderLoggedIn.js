@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { FiMenu, FiX } from "react-icons/fi";
 import { AuthContext } from "./Auth";
 import "./Header.css";
+import firebaseConfig from "../config";
 
 function HeaderNotLogIn() {
   const [click, setClick] = useState(false);
@@ -26,11 +27,16 @@ function HeaderNotLogIn() {
             <li className="menu-link" onClick={closeMobileMenu}>
               <a href="#">{currentUser.email}</a>
             </li>
-            {/* <li>
-              <Link to="signup" className="menu-link" onClick={closeMobileMenu}>
+            <li>
+              <Link
+                to="/"
+                className="menu-link"
+                onClick={closeMobileMenu}
+                onClick={() => firebaseConfig.auth().signOut()}
+              >
                 Sign out
               </Link>
-            </li> */}
+            </li>
           </ul>
           <div className="mobile-menu" onClick={handleClick}>
             {click ? <FiX /> : <FiMenu />}

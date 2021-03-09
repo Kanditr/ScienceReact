@@ -1,8 +1,12 @@
-import React, { Component } from "react";
+import React, { Component, useContext } from "react";
+import { Redirect, Route } from "react-router-dom";
 import firebaseConfig from "../config";
+import { AuthContext } from "./Auth";
 import Header from "./Header";
+import LogIn from "./Login";
 
 var db = firebaseConfig.firestore();
+// const { currentUser } = useContext(AuthContext);
 
 class Create extends Component {
   constructor(props) {
@@ -28,20 +32,7 @@ class Create extends Component {
     this.refs.contactForm.reset();
   }
 
-  // componentWillMount() {
-  //   let formRef = firebaseConfig
-  //     .database()
-  //     .ref("User")
-  //     .orderByKey()
-  //     .limitToLast(6);
-  //   formRef.on("child_added", (snapshot) => {
-  //     const { name, email, city, phone, message } = snapshot.val();
-  //     const data = { name, email, city, phone, message };
-  //     this.setState({ User: [data].concat(this.state.User) });
-  //   });
-  // }
-
-  componentWillMount() {
+  componentDidMount() {
     db.collection("User")
       .get()
       .then((snapshot) => {
@@ -54,48 +45,65 @@ class Create extends Component {
       });
   }
 
+  // handleSubmit(e) {
+  //   e.preventDefault();
+  //   let user = firebaseConfig.auth().currentUser;
+  //   // let path = `login`;
+  //   if (user) {
+  //     console.log("Hi ja");
+  //   } else {
+  //     <Route exact path="/" />;
+  //     // useHistory.push(path);
+  //     // alert("hehe");
+  //     console.log("Hi ja 55");
+  //   }
+  // }
+
+  // routeChange = () => {
+  //   let path = `newPath`;
+  //   let history = useHistory();
+  //   history.push(path);
+  // };
+
   sendMessage(e) {
     e.preventDefault();
-    const params = {
-      name: this.inputName.value,
-      email: this.inputEmail.value,
-      city: this.inputCity.value,
-      phone: this.inputPhone.value,
-      message: this.textAreaMessage.value,
-    };
-    if (
-      params.name &&
-      params.email &&
-      params.phone &&
-      params.phone &&
-      params.message
-    ) {
-      //  {
-      //   firebaseConfig
-      //     .database()
-      //     .ref("User")
-      //     .push(params)
-      //     .then(() => {
-      //       this.showAlert("success", "Your message was sent successfull");
-      //     })
-      //     .catch(() => {
-      //       this.showAlert("danger", "Your message could not be sent");
-      //     });
-      //   this.resetForm();
-      // }
-      db.collection("User")
-        .add(params)
-        .then(() => {
-          this.showAlert("success", "Your message was sent successfull");
-        })
-        .catch(() => {
-          this.showAlert("danger", "Your message could not be sent");
-        });
-      this.resetForm();
-    } else {
-      this.showAlert("warning", "Please fill the form");
+    let user = firebaseConfig.auth().currentUser;
+    // console.log("hi ja");
+    if (user) {
+      const params = {
+        name: this.inputName.value,
+        email: user.email,
+        // email: this.inputEmail.value,
+        type: this.inputType.value,
+        fund: this.inputFund.value,
+        message: this.textAreaMessage.value,
+      };
+      if (
+        params.name &&
+        params.email &&
+        params.type &&
+        params.fund &&
+        params.message
+      ) {
+        db.collection("User")
+          .add(params)
+          .then(() => {
+            this.showAlert("success", "Your message was sent successfull");
+          })
+          .catch(() => {
+            this.showAlert("danger", "Your message could not be sent");
+          });
+        this.resetForm();
+      } else {
+        this.showAlert("warning", "Please fill the form");
+      }
     }
   }
+
+  // sendMessage(e) {
+  //   e.preventDefault();
+  //   <Redirect to="/" />;
+  // }
 
   render() {
     return (
@@ -124,7 +132,7 @@ class Create extends Component {
                     ref={(name) => (this.inputName = name)}
                   />
                 </div>
-                <div className="form-group">
+                {/* <div className="form-group">
                   <label htmlFor="exampleInputEmail1">Email</label>
                   <input
                     type="email"
@@ -133,27 +141,27 @@ class Create extends Component {
                     placeholder="Email"
                     ref={(email) => (this.inputEmail = email)}
                   />
-                </div>
+                </div> */}
                 <div className="form-group">
-                  <label htmlFor="city">City</label>
+                  <label htmlFor="type">Type</label>
                   <select
                     className="form-control"
-                    id="city"
-                    ref={(city) => (this.inputCity = city)}
+                    id="type"
+                    ref={(type) => (this.inputType = type)}
                   >
-                    <option value="Bangkok">Bangkok</option>
-                    <option value="Nonthaburi">Nonthaburi</option>
-                    <option value="Pathumthani">Pathumthani</option>
+                    <option value="Tech">Tech</option>
+                    <option value="Science">Science</option>
+                    <option value="Community">Community</option>
                   </select>
                 </div>
                 <div className="form-group">
-                  <label htmlFor="phone">Phone</label>
+                  <label htmlFor="fund">Fund</label>
                   <input
                     type="number"
                     className="form-control"
-                    id="phone"
-                    placeholder="+66 0"
-                    ref={(phone) => (this.inputPhone = phone)}
+                    id="fund"
+                    placeholder="3000 THB"
+                    ref={(fund) => (this.inputFund = fund)}
                   />
                 </div>
                 <div className="form-group">
@@ -170,6 +178,7 @@ class Create extends Component {
                   type="submit"
                   className="btn btn-primary"
                   style={{ margin: `0px 0px 10px 0px` }}
+                  onClick={this.handleSubmit}
                 >
                   Send
                 </button>
@@ -180,19 +189,17 @@ class Create extends Component {
                 {this.state.User.map((User) => (
                   <div
                     className="col-sm-6"
-                    key={User.phone}
+                    key={User.fund}
                     style={{ margin: `0px 0px 30px 0px` }}
                   >
                     <div className="card">
                       <div className="card-body">
                         <h4 className="card-title">{User.name}</h4>
                         <h6 className="card-subtitle mb-2 text-muted">
-                          {User.city}
+                          {User.type}
                         </h6>
                         <p className="card-text">{User.message}</p>
-                        <a href={`tel:${User.phone}`} className="card-link">
-                          {User.phone}
-                        </a>
+                        <p className="card-text">{User.fund}</p>
                         <a href={`mailto:${User.email}`} className="card-link">
                           {User.email}
                         </a>
