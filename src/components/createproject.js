@@ -6,7 +6,6 @@ import Header from "./Header";
 import LogIn from "./Login";
 
 var db = firebaseConfig.firestore();
-// const { currentUser } = useContext(AuthContext);
 
 class Create extends Component {
   constructor(props) {
@@ -15,6 +14,7 @@ class Create extends Component {
       User: [],
       alert: false,
       alertData: {},
+      redirect: false,
     };
   }
 
@@ -45,35 +45,17 @@ class Create extends Component {
       });
   }
 
-  // handleSubmit(e) {
-  //   e.preventDefault();
-  //   let user = firebaseConfig.auth().currentUser;
-  //   // let path = `login`;
-  //   if (user) {
-  //     console.log("Hi ja");
-  //   } else {
-  //     <Route exact path="/" />;
-  //     // useHistory.push(path);
-  //     // alert("hehe");
-  //     console.log("Hi ja 55");
-  //   }
-  // }
-
-  // routeChange = () => {
-  //   let path = `newPath`;
-  //   let history = useHistory();
-  //   history.push(path);
-  // };
-
   sendMessage(e) {
     e.preventDefault();
     let user = firebaseConfig.auth().currentUser;
-    // console.log("hi ja");
-    if (user) {
+    if (!user) {
+      this.setState({
+        redirect: true,
+      });
+    } else {
       const params = {
         name: this.inputName.value,
         email: user.email,
-        // email: this.inputEmail.value,
         type: this.inputType.value,
         fund: this.inputFund.value,
         message: this.textAreaMessage.value,
@@ -100,15 +82,17 @@ class Create extends Component {
     }
   }
 
-  // sendMessage(e) {
-  //   e.preventDefault();
-  //   <Redirect to="/" />;
-  // }
+  renderRedirect = () => {
+    if (this.state.redirect) {
+      return <Redirect to="/login" />;
+    }
+  };
 
   render() {
     return (
       <div>
         <Header />
+        {this.renderRedirect()}
         {this.state.alert && (
           <div
             className={`alert alert-${this.state.alertData.type}`}
@@ -132,16 +116,6 @@ class Create extends Component {
                     ref={(name) => (this.inputName = name)}
                   />
                 </div>
-                {/* <div className="form-group">
-                  <label htmlFor="exampleInputEmail1">Email</label>
-                  <input
-                    type="email"
-                    className="form-control"
-                    id="email"
-                    placeholder="Email"
-                    ref={(email) => (this.inputEmail = email)}
-                  />
-                </div> */}
                 <div className="form-group">
                   <label htmlFor="type">Type</label>
                   <select
