@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./Banner.css";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
+import firebaseConfig from "../config";
+import { AuthContext } from "./Auth";
 
 let bannerData = {
   title: "Science3 landing page",
@@ -9,6 +11,8 @@ let bannerData = {
 };
 
 function Banner() {
+  const { currentUser } = useContext(AuthContext);
+
   return (
     <div className="banner-bg">
       <div className="container">
@@ -16,9 +20,15 @@ function Banner() {
           <div className="banner-text">
             <h1>{bannerData.title}</h1>
             <p>{bannerData.desc}</p>
-            <Link to="/createproject" className="banner-btn">
-              Create a project
-            </Link>
+            {currentUser ? (
+              <Link to="/createproject" className="banner-btn">
+                Create a project
+              </Link>
+            ) : (
+              <Link to="/login" className="banner-btn">
+                Create a project
+              </Link>
+            )}
           </div>
         </div>
       </div>
