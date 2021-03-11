@@ -4,6 +4,7 @@ import Header from "./Header";
 import Banner from "./Banner";
 import DashBoard from "./Dashboard";
 // import { Redirect } from "react-router-dom";
+import SectionProject from "./sectionProject";
 
 const Home = () => {
   const { currentUser } = useContext(AuthContext);
@@ -14,6 +15,7 @@ const Home = () => {
         <div>
           <Header />
           <Banner />
+          <SectionProject />
         </div>
       </>
     );
@@ -25,6 +27,7 @@ const Home = () => {
         <Header />
         <Banner />
         <DashBoard />
+        <SectionProject />
       </div>
     </>
   );
