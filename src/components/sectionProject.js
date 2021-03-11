@@ -3,6 +3,12 @@ import firebaseConfig from "../config";
 
 var db = firebaseConfig.firestore();
 
+// const data = [
+//   { id: 1, type: "Tech" },
+//   { id: 2, type: "Science" },
+//   { id: 3, type: "Community" },
+// ];
+
 class SectionProject extends Component {
   //   have to clean this constructor -> can we use [user, setUser] instead?
   constructor(props) {
@@ -17,7 +23,6 @@ class SectionProject extends Component {
 
   componentDidMount() {
     db.collection("User")
-      .where("type", "==", this.state.filter)
       .get()
       .then((snapshot) => {
         const user = [];
@@ -29,12 +34,96 @@ class SectionProject extends Component {
       });
   }
 
-  set() {}
+  // this filter is using hardcode -> can be improve
+
+  filterCommunity = () => {
+    db.collection("User")
+      .where("type", "==", "Community")
+      .get()
+      .then((snapshot) => {
+        const user = [];
+        snapshot.forEach((doc) => {
+          const data = doc.data();
+          user.push(data);
+        });
+        this.setState({ user: user });
+      });
+  };
+
+  filterTech = () => {
+    db.collection("User")
+      .where("type", "==", "Tech")
+      .get()
+      .then((snapshot) => {
+        const user = [];
+        snapshot.forEach((doc) => {
+          const data = doc.data();
+          user.push(data);
+        });
+        this.setState({ user: user });
+      });
+  };
+
+  filterScience = () => {
+    db.collection("User")
+      .where("type", "==", "Science")
+      .get()
+      .then((snapshot) => {
+        const user = [];
+        snapshot.forEach((doc) => {
+          const data = doc.data();
+          user.push(data);
+        });
+        this.setState({ user: user });
+      });
+  };
+
+  filterReset = () => {
+    db.collection("User")
+      .get()
+      .then((snapshot) => {
+        const user = [];
+        snapshot.forEach((doc) => {
+          const data = doc.data();
+          user.push(data);
+        });
+        this.setState({ user: user });
+      });
+  };
 
   render() {
     return (
       <div className="container">
-        <button>Community</button>
+        <div className="mt-5">
+          <button
+            className="btn btn-outline-primary"
+            onClick={this.filterTech}
+            style={{ margin: `0px 15px 0px 0px` }}
+          >
+            Tech
+          </button>
+          <button
+            className="btn btn-outline-primary"
+            onClick={this.filterCommunity}
+            style={{ margin: `0px 15px 0px 0px` }}
+          >
+            Community
+          </button>
+          <button
+            className="btn btn-outline-primary"
+            onClick={this.filterScience}
+            style={{ margin: `0px 15px 0px 0px` }}
+          >
+            Science
+          </button>
+          <button
+            className="btn btn-outline-danger"
+            onClick={this.filterReset}
+            style={{ margin: `0px 15px 0px 0px` }}
+          >
+            Reset
+          </button>
+        </div>
         <div className="mt-5">
           <div className="col-sm-12">
             <div className="row row-cols-3">
