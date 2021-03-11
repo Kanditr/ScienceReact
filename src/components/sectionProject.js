@@ -1,4 +1,4 @@
-import React, { Component, componentDidMount } from "react";
+import React, { Component } from "react";
 import firebaseConfig from "../config";
 
 var db = firebaseConfig.firestore();
@@ -9,11 +9,15 @@ class SectionProject extends Component {
     super(props);
     this.state = {
       user: [],
+      filter: "Tech",
     };
   }
 
+  //   Tech Science Community
+
   componentDidMount() {
     db.collection("User")
+      .where("type", "==", this.state.filter)
       .get()
       .then((snapshot) => {
         const user = [];
@@ -25,9 +29,12 @@ class SectionProject extends Component {
       });
   }
 
+  set() {}
+
   render() {
     return (
       <div className="container">
+        <button>Community</button>
         <div className="mt-5">
           <div className="col-sm-12">
             <div className="row row-cols-3">
