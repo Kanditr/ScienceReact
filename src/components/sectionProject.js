@@ -3,6 +3,8 @@ import firebaseConfig from "../config";
 
 var db = firebaseConfig.firestore();
 
+// test = db.collection("User");
+
 // const data = [
 //   { id: 1, type: "Tech" },
 //   { id: 2, type: "Science" },
@@ -24,6 +26,7 @@ class SectionProject extends Component {
   componentDidMount() {
     db.collection("User")
       .get()
+      // .limitToLast(2)
       .then((snapshot) => {
         const user = [];
         snapshot.forEach((doc) => {

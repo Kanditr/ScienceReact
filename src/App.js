@@ -9,6 +9,7 @@ import Create from "./components/createproject";
 import { AuthProvider } from "./components/Auth";
 // import Testcreateproject2 from "./components/test-createproject copy";
 // import Testcreateproject from "./components/test-createproject3";
+import TestRealtimeFetching from "./components/testRealtimeFetching";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route exact path="/login" component={LogIn} />
           <Route exact path="/signup" component={signup} />
           <Route exact path="/createproject" component={Create} />
+          <Route exact path="/fetching" component={TestRealtimeFetching} />
         </Switch>
       </Router>
     </AuthProvider>
