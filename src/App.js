@@ -6,6 +6,9 @@ import LogIn from "./components/Login";
 import signup from "./components/signup";
 import Create from "./components/createproject";
 import { AuthProvider } from "./components/Auth";
+import PageViewProject from "./components/PageViewProject";
+import TestSend from "./components/TestSend";
+import TestReceive from "./components/TestReceive";
 
 function App() {
   return (
@@ -17,6 +20,9 @@ function App() {
           <Route exact path="/login" component={LogIn} />
           <Route exact path="/signup" component={signup} />
           <Route exact path="/createproject" component={Create} />
+          <Route exact path="/project" component={PageViewProject} />
+          <Route exact path="/testsend" component={TestSend} />
+          <Route exact path="/testreceive" component={TestReceive} />
         </Switch>
       </Router>
     </AuthProvider>
