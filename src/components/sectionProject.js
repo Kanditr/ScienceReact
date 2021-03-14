@@ -1,5 +1,6 @@
-import React, { userState, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import firebaseConfig from "../config";
+import { Link } from "react-router-dom";
 
 function SectionProject() {
   const [projects, setProject] = useState([]);
@@ -82,7 +83,17 @@ function SectionProject() {
               >
                 <div className="card">
                   <div className="card-body">
-                    <h4 className="card-title">{project.name}</h4>
+                    {/* to be enhance */}
+                    <Link
+                      to={{
+                        pathname: "/testreceive",
+                        value: project.name,
+                      }}
+                      className="card-title"
+                    >
+                      {project.name}
+                    </Link>
+                    {/* to be enhance */}
                     <h6 className="card-subtitle mb-2 text-muted">
                       {project.type}
                     </h6>

@@ -2,7 +2,9 @@ import React, { Component } from "react";
 import Card from "react-bootstrap/Card";
 import CardGroup from "react-bootstrap/CardGroup";
 import { Link } from "react-router-dom";
-import axios from "axios";
+import firebaseConfig from "../config";
+
+const db = firebaseConfig.firestore().collection("User");
 
 export default class TestSend extends Component {
   state = {
@@ -10,16 +12,15 @@ export default class TestSend extends Component {
   };
 
   componentDidMount() {
-    axios
-      .get("https://jsonplaceholder.typicode.com/posts")
-      .then((res) => {
-        this.setState({
-          post: res.data,
-        });
-      })
-      .catch(function (error) {
-        console.log(error);
+    db.limit(10).onSnapshot((querySnapshot) => {
+      const items = [];
+      querySnapshot.forEach((doc) => {
+        items.push(doc.data());
       });
+      this.setState({
+        post: items,
+      });
+    });
   }
 
   render() {
@@ -28,23 +29,23 @@ export default class TestSend extends Component {
         <h3 className="mt-3"> Card </h3>
 
         {this.state.post.map((post) => {
-          let Id = post.id;
+          let Projectname = post.name;
           return (
-            <CardGroup key={post.id} className="m-3">
+            <CardGroup key={post.name} className="m-3">
               <Card>
                 <Card.Body>
-                  <Card.Title> {post.title} </Card.Title>
-                  <Card.Text>{post.body}</Card.Text>
+                  <Card.Title> {post.name} </Card.Title>
+                  <Card.Text>{post.message}</Card.Text>
                 </Card.Body>
 
                 <Card.Footer>
                   <Link
                     to={{
                       pathname: "/testreceive",
-                      value: { Id },
+                      value: { Projectname },
                     }}
                   >
-                    <Card.Link>Read More...</Card.Link>
+                    <Card>Read More...</Card>
                   </Link>
                 </Card.Footer>
               </Card>
