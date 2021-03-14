@@ -15,7 +15,7 @@ function HeaderNotLogIn() {
       <div className="container">
         <div className="header-con">
           <div className="logo-container">
-            <a href="/">Science3</a>
+            <Link to="/">Science3</Link>
           </div>
           <ul className={click ? "menu active" : "menu"}>
             <li className="menu-link" onClick={closeMobileMenu}>
