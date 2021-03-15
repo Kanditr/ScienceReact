@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Redirect } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 import { AuthContext } from "./Auth";
 import firebaseConfig from "../config";
 import Header from "./Header";
@@ -58,6 +58,9 @@ const LogIn = () => {
           <button type="submit" className="btn btn-primary">
             Submit
           </button>
+          <Link to="signup" className="btn btn-success ms-2">
+            Signup
+          </Link>
         </form>
       </div>
     </>
