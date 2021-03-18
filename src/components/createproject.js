@@ -1,15 +1,16 @@
-import React, { Component, useContext } from "react";
+import React, { Component, useContext, createRef } from "react";
 import { Redirect, Route } from "react-router-dom";
 import firebaseConfig from "../config";
-import { AuthContext } from "./Auth";
+// import { AuthContext } from "./Auth";
 import Header from "./Header";
-import LogIn from "./Login";
+// import LogIn from "./Login";
 
 var db = firebaseConfig.firestore();
 
 class Create extends Component {
   constructor(props) {
     super(props);
+    this.formRef = createRef();
     this.state = {
       User: [],
       alert: false,
@@ -28,9 +29,9 @@ class Create extends Component {
     }, 4000);
   }
 
-  resetForm() {
-    this.refs.contactForm.reset();
-  }
+  // resetForm() {
+  //   this.formRef.reset();
+  // }
 
   componentDidMount() {
     db.collection("User")
@@ -75,7 +76,7 @@ class Create extends Component {
           .catch(() => {
             this.showAlert("danger", "Your message could not be sent");
           });
-        this.resetForm();
+        // this.resetForm();
       } else {
         this.showAlert("warning", "Please fill the form");
       }
@@ -105,7 +106,7 @@ class Create extends Component {
           <div className="row">
             <div className="col-sm-4">
               <h2>Project</h2>
-              <form onSubmit={this.sendMessage.bind(this)} ref="contactForm">
+              <form onSubmit={this.sendMessage.bind(this)} ref={this.formRef}>
                 <div className="form-group">
                   <label htmlFor="name">Name</label>
                   <input

@@ -3,6 +3,8 @@ import { Redirect, Link } from "react-router-dom";
 import { AuthContext } from "./Auth";
 import firebaseConfig from "../config";
 import Header from "./Header";
+import firebase from "firebase/app";
+import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 
 const LogIn = () => {
   const handleSubmit = (e) => {
@@ -18,10 +20,35 @@ const LogIn = () => {
     }
   };
 
+  const googleLogin = (e) => {
+    e.preventDefault();
+
+    const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
+    try {
+      firebaseConfig.auth().signInWithPopup(googleAuthProvider);
+    } catch (error) {
+      alert(error);
+    }
+  };
+
   const { currentUser } = useContext(AuthContext);
   if (currentUser) {
     return <Redirect to="/" />;
   }
+
+  const uiConfig = {
+    signInFlow: "popup",
+    signInOptions: [
+      firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+      // firebase.auth.FacebookAuthProvider.PROVIDER_ID,
+      // firebase.auth.TwitterAuthProvider.PROVIDER_ID,
+      // firebase.auth.GithubAuthProvider.PROVIDER_ID,
+      // firebase.auth.EmailAuthProvider.PROVIDER_ID,
+    ],
+    callbacks: {
+      signInSuccess: () => false,
+    },
+  };
 
   return (
     <>
@@ -30,7 +57,7 @@ const LogIn = () => {
         <h1>Log in</h1>
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
-            <label for="exampleInputEmail1" className="form-label">
+            <label htmlFor="exampleInputEmail1" className="form-label">
               Email address
             </label>
             <input
@@ -45,7 +72,7 @@ const LogIn = () => {
             </div>
           </div>
           <div className="mb-3">
-            <label for="exampleInputPassword1" className="form-label">
+            <label htmlFor="exampleInputPassword1" className="form-label">
               Password
             </label>
             <input
@@ -62,6 +89,13 @@ const LogIn = () => {
             Signup
           </Link>
         </form>
+        {/* <button onClick={googleLogin}>google</button> */}
+        <div className="container mt-5">
+          <StyledFirebaseAuth
+            uiConfig={uiConfig}
+            firebaseAuth={firebase.auth()}
+          />
+        </div>
       </div>
     </>
   );

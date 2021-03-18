@@ -9,6 +9,7 @@ import { AuthProvider } from "./components/Auth";
 import PageViewProject from "./components/PageViewProject";
 import TestSend from "./components/TestSend";
 import TestReceive from "./components/TestReceive";
+// import TestGoogleLogin from "./components/testGoogleLogin";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route exact path="/project" component={PageViewProject} />
           <Route exact path="/testsend" component={TestSend} />
           <Route exact path="/testreceive" component={TestReceive} />
+          {/* <Route exact path="/testGoogleLogin" component={TestGoogleLogin} /> */}
         </Switch>
       </Router>
     </AuthProvider>
