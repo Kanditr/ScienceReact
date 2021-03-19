@@ -1,5 +1,5 @@
-import React, { useContext } from "react";
-import { Redirect, Link } from "react-router-dom";
+import React, { useContext, useState, useEffect } from "react";
+import { Redirect, Link, useLocation } from "react-router-dom";
 import { AuthContext } from "./Auth";
 import firebaseConfig from "../config";
 import Header from "./Header";
@@ -7,6 +7,17 @@ import firebase from "firebase/app";
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 
 const LogIn = () => {
+  const [check, setCheck] = useState();
+
+  let Location = useLocation();
+  let homeCheck = Location.value;
+
+  useEffect(() => {
+    setCheck(2);
+    console.log(currentUser);
+    console.log(homeCheck);
+  }, []);
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -20,21 +31,17 @@ const LogIn = () => {
     }
   };
 
-  const googleLogin = (e) => {
-    e.preventDefault();
-
-    const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
-    try {
-      firebaseConfig.auth().signInWithPopup(googleAuthProvider);
-    } catch (error) {
-      alert(error);
-    }
-  };
-
   const { currentUser } = useContext(AuthContext);
-  if (currentUser) {
+
+  // can be improve using ternary code? SCN-61
+  if (currentUser && homeCheck) {
+    return <Redirect to="/createproject" />;
+  }
+
+  if (currentUser && !homeCheck) {
     return <Redirect to="/" />;
   }
+  // can be improve using ternary code? SCN-61
 
   const uiConfig = {
     signInFlow: "popup",
@@ -89,7 +96,6 @@ const LogIn = () => {
             Signup
           </Link>
         </form>
-        {/* <button onClick={googleLogin}>google</button> */}
         <div className="container mt-5">
           <StyledFirebaseAuth
             uiConfig={uiConfig}

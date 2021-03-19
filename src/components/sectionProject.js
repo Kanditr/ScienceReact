@@ -78,7 +78,7 @@ function SectionProject() {
             {projects.map((project) => (
               <div
                 className="col-sm-4"
-                key={project.fund}
+                key={project.name}
                 style={{ margin: `0px 0px 30px 0px` }}
               >
                 <div className="card">

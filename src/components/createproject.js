@@ -164,7 +164,7 @@ class Create extends Component {
                 {this.state.User.map((User) => (
                   <div
                     className="col-sm-6"
-                    key={User.fund}
+                    key={User.name}
                     style={{ margin: `0px 0px 30px 0px` }}
                   >
                     <div className="card">
