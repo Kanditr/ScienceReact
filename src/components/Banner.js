@@ -2,6 +2,8 @@ import React, { useContext, useState } from "react";
 import "./Banner.css";
 import { Link } from "react-router-dom";
 import { AuthContext } from "./Auth";
+import "fontsource-roboto";
+import { Container, Typography } from "@material-ui/core";
 
 let bannerData = {
   title: "Science3 landing page",
@@ -12,15 +14,17 @@ let bannerData = {
 function Banner() {
   const { currentUser } = useContext(AuthContext);
 
-  const fromHome = true;
-
   return (
     <div className="banner-bg">
       <div className="container">
         <div className="banner-con">
-          <div className="banner-text">
-            <h1>{bannerData.title}</h1>
-            <p>{bannerData.desc}</p>
+          <Container className="banner-text">
+            <Typography variant="h4" gutterBottom>
+              {bannerData.title}
+            </Typography>
+            <Typography variant="body1" gutterBottom>
+              {bannerData.desc}
+            </Typography>
             {currentUser ? (
               <Link to="/createproject" className="banner-btn">
                 Create a project
@@ -33,7 +37,7 @@ function Banner() {
                 Create a project
               </Link>
             )}
-          </div>
+          </Container>
         </div>
       </div>
     </div>
