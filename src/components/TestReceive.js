@@ -6,19 +6,23 @@ import firebaseConfig from "../config";
 import Header from "./Header";
 
 const TestReceive = () => {
-  const db = firebaseConfig.firestore().collection("User");
+  const db = firebaseConfig.firestore().collection("projects");
   const [projects, setProject] = useState([]);
   let Location = useLocation();
   let Projectname = Location.value;
 
+  console.log(Projectname);
+
   useEffect(() => {
-    db.where("name", "==", `${Projectname}`).onSnapshot((querySnapshot) => {
-      const items = [];
-      querySnapshot.forEach((doc) => {
-        items.push(doc.data());
-      });
-      setProject(items);
-    });
+    db.where("projectName", "==", `${Projectname}`).onSnapshot(
+      (querySnapshot) => {
+        const items = [];
+        querySnapshot.forEach((doc) => {
+          items.push(doc.data());
+        });
+        setProject(items);
+      }
+    );
   }, []);
 
   return (
@@ -27,11 +31,11 @@ const TestReceive = () => {
       <div className="container mt-5">
         {/* this is a loop? -> can be enhance? */}
         {projects.map((project) => (
-          <CardGroup key={project.name}>
+          <CardGroup key={project.projectName}>
             <Card>
               <Card.Body>
-                <Card.Title className="mt-5">{project.name}</Card.Title>
-                <Card.Text>{project.message}</Card.Text>
+                <Card.Title className="mt-5">{project.projectName}</Card.Title>
+                <Card.Text>{project.description}</Card.Text>
               </Card.Body>
             </Card>
           </CardGroup>
