@@ -12,6 +12,9 @@ import TestReceive from "./components/TestReceive";
 // import TestGoogleLogin from "./components/testGoogleLogin";
 import Materialtest from "./components/materialtest";
 import MaterialCard from "./components/materialCard";
+import CreateProjectTest from "./components/createProjectTest";
+import HorizontalNonLinearStepper from "./components/TabTest";
+// import Parent from "./Parent";
 
 function App() {
   return (
@@ -22,12 +25,17 @@ function App() {
           <Route exact path="/Dashboard" component={Dashboard} />
           <Route exact path="/login" component={Materialtest} />
           <Route exact path="/signup" component={signup} />
-          <Route exact path="/createproject" component={Create} />
+          <Route
+            exact
+            path="/createproject"
+            component={HorizontalNonLinearStepper}
+          />
           <Route exact path="/project" component={PageViewProject} />
           <Route exact path="/testsend" component={TestSend} />
           <Route exact path="/testreceive" component={TestReceive} />
           <Route exact path="/materialtest" component={Materialtest} />
           <Route exact path="/materialcard" component={MaterialCard} />
+          {/* <Route exact path="/parent" component={Parent} /> */}
           {/* <Route exact path="/testGoogleLogin" component={TestGoogleLogin} /> */}
         </Switch>
       </Router>
