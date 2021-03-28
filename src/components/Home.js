@@ -4,7 +4,7 @@ import Header from "./Header";
 import Banner from "./Banner";
 import DashBoard from "./Dashboard";
 import { Link } from "react-router-dom";
-import SectionProject from "./sectionProject";
+import SectionProjectLimit from "./SectionProjectLimit";
 // material-ui
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
@@ -52,7 +52,7 @@ const Home = () => {
     return (
       <Typography variant="body2" color="textSecondary" align="center">
         {"Copyright © "}
-        <Link color="inherit" href="/">
+        <Link color="inherit" to="/">
           Science3
         </Link>{" "}
         {new Date().getFullYear()}
@@ -67,7 +67,7 @@ const Home = () => {
         <div>
           <Header />
           <Banner />
-          <SectionProject />
+          <SectionProjectLimit />
           {/* Footer */}
           <footer className={classes.footer}>
             <Typography variant="h6" align="center" gutterBottom>
@@ -94,8 +94,8 @@ const Home = () => {
       <div>
         <Header />
         <Banner />
-        <DashBoard />
-        <SectionProject />
+        {/* <DashBoard /> */}
+        <SectionProjectLimit />
         {/* Footer */}
         <footer className={classes.footer}>
           <Typography variant="h6" align="center" gutterBottom>

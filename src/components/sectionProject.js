@@ -1,43 +1,39 @@
 import React, { useEffect, useState } from "react";
 import firebaseConfig from "../config";
-import { Link } from "react-router-dom";
-// material-ui
+import Container from "@material-ui/core/Container";
+import Grid from "@material-ui/core/Grid";
 import Card from "@material-ui/core/Card";
-import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
-import Button from "@material-ui/core/Button";
-import Grid from "@material-ui/core/Grid";
+import CardActions from "@material-ui/core/CardActions";
 import Typography from "@material-ui/core/Typography";
-import Container from "@material-ui/core/Container";
-import { makeStyles } from "@material-ui/core/styles";
-import "fontsource-roboto";
+import Button from "@material-ui/core/Button";
 import Chip from "@material-ui/core/Chip";
+import { makeStyles } from "@material-ui/core/styles";
+import { Link } from "react-router-dom";
 
 function SectionProject() {
   const [projects, setProject] = useState([]);
   const [status, setStatus] = useState(false);
-
-  const db = firebaseConfig.firestore().collection("User");
+  const db = firebaseConfig.firestore().collection("projects");
 
   function getProject() {
-    db.limit(9).onSnapshot((querySnapshot) => {
+    db.limit(21).onSnapshot((querySnapshot) => {
       const items = [];
       querySnapshot.forEach((doc) => {
-        items.push(doc.data());
+        items.push({ id: doc.id, data: doc.data() });
       });
       setProject(items);
-      setStatus(false);
     });
   }
 
   function filterProject(testname) {
-    db.where("type", "==", testname)
+    db.where("category", "==", testname)
       .limit(10)
       .onSnapshot((querySnapshot) => {
         const items = [];
         querySnapshot.forEach((doc) => {
-          items.push(doc.data());
+          items.push({ id: doc.id, data: doc.data() });
         });
         setProject(items);
         setStatus(true);
@@ -51,6 +47,8 @@ function SectionProject() {
       filterProject();
     }
   }, []);
+
+  console.log(projects);
 
   const useStyles = makeStyles((theme) => ({
     root: {
@@ -95,114 +93,85 @@ function SectionProject() {
   const classes = useStyles();
 
   return (
-    <div className={classes.root}>
-      <div>
-        <Grid container justify="center">
-          <Chip
-            size="small"
-            label="Tech"
-            onClick={() => filterProject("Tech")}
-            variant="outlined"
-            className={classes.chip}
-          />
-          <Chip
-            size="small"
-            label="Community"
-            onClick={() => filterProject("Community")}
-            variant="outlined"
-            className={classes.chip}
-          />
-          <Chip
-            size="small"
-            label="Science"
-            onClick={() => filterProject("Science")}
-            variant="outlined"
-            className={classes.chip}
-          />
-          <Chip
-            size="small"
-            x
-            label="Reset"
-            onClick={getProject}
-            variant="outlined"
-            className={classes.chip}
-          />
-        </Grid>
-        <Container className={classes.cardGrid} maxWidth="md">
-          <Grid container spacing={4}>
-            {projects.map((card) => (
-              <Grid item key={card} xs={12} sm={6} md={4}>
-                <Card className={classes.card}>
-                  <CardMedia
-                    className={classes.cardMedia}
-                    image="https://source.unsplash.com/random"
-                    title="Image title"
-                  />
-                  <CardContent className={classes.cardContent}>
-                    <Typography gutterBottom variant="h5" component="h2">
-                      {card.name}
-                    </Typography>
-                    <Typography>{card.message}</Typography>
-                  </CardContent>
-                  <CardActions>
-                    <Button size="small" color="primary">
-                      View
-                    </Button>
-                    {/* to change into button with handleClick function */}
-                    <Link
-                      to={{
-                        pathname: "/testreceive",
-                        value: card.name,
-                      }}
-                    >
-                      Test
-                    </Link>
-                    {/* to change into button with handleClick function */}
-                  </CardActions>
-                </Card>
-              </Grid>
-            ))}
+    <>
+      <Container className={classes.cardGrid} maxWidth="md">
+        <Grid container spacing={4}>
+          <Grid container justify="center">
+            <Chip
+              size="small"
+              label="Tech"
+              onClick={() => filterProject("Tech")}
+              variant="outlined"
+              className={classes.chip}
+            />
+            <Chip
+              size="small"
+              label="Community"
+              onClick={() => filterProject("Community")}
+              variant="outlined"
+              className={classes.chip}
+            />
+            <Chip
+              size="small"
+              label="Science"
+              onClick={() => filterProject("Science")}
+              variant="outlined"
+              className={classes.chip}
+            />
+            <Chip
+              size="small"
+              label="Reset filter"
+              onClick={getProject}
+              variant="outlined"
+              className={classes.chip}
+            />
+            <Chip
+              size="small"
+              label="View all projects"
+              variant="outlined"
+              className={classes.chip}
+              onClick={() => {
+                console.log("Redirect");
+              }}
+              component={Link}
+              to={{
+                pathname: "/viewallprojects",
+              }}
+            />
           </Grid>
-        </Container>
-      </div>
-      {/* <div className="mt-5">
-        <div className="col-sm-12">
-          <div className="row row-cols-3">
-            {projects.map((project) => (
-              <div
-                className="col-sm-4"
-                key={project.name}
-                style={{ margin: `0px 0px 30px 0px` }}
-              >
-                <div className="card">
-                  <div className="card-body">
-                   
-                    <Link
-                      to={{
-                        pathname: "/testreceive",
-                        value: project.name,
-                      }}
-                      className="card-title"
-                    >
-                      {project.name}
-                    </Link>
-                    
-                    <h6 className="card-subtitle mb-2 text-muted">
-                      {project.type}
-                    </h6>
-                    <p className="card-text">{project.message}</p>
-                    <p className="card-text">{project.fund}</p>
-                    <a href={`mailto:${project.email}`} className="card-link">
-                      {project.email}
-                    </a>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div> */}
-    </div>
+          {projects.map((project) => (
+            <Grid item key={project.id} xs={12} sm={6} md={4}>
+              <Card className={classes.card}>
+                <CardMedia
+                  className={classes.cardMedia}
+                  image="https://source.unsplash.com/random"
+                  title="Image title"
+                />
+                <CardContent className={classes.cardContent}>
+                  <Typography gutterBottom variant="h5" component="h2">
+                    {project.data.projectName}
+                  </Typography>
+                  <Typography>{project.data.description}</Typography>
+                </CardContent>
+                <CardActions>
+                  <Button size="small" color="primary">
+                    View
+                  </Button>
+                  <Link
+                    to={{
+                      pathname: "/viewproject",
+                      value: project.id,
+                    }}
+                  >
+                    Test
+                  </Link>
+                </CardActions>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
+      </Container>
+    </>
   );
 }
 
